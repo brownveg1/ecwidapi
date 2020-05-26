@@ -15,7 +15,7 @@ product(req.body.queryResult.parameters.orderno, (error,data) => {
   if (error) {
       return res.send({ error })
   }
-      res.send({
+      res.json({
           
           fulfillmentMessages:[{"text":{"text":[data]}}]
           

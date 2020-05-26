@@ -14,17 +14,16 @@ request({url: url, json:true},(error, response) => {
         
         }
         else{
-            callback(undefined, {
+            callback(undefined,  response.body.items[0].name + ' Rs.'+ response.body.items[0].price +'/Kg')          
                 
-                
-                Product: response.body.items[0].name,
+                 
                
-                price: response.body.items[0].price
+                
             
-            })
+            }
        
 
-        }
+        
     })
 
 }
