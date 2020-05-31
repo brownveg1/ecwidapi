@@ -153,7 +153,10 @@ async function gsrun(cl){
         order(orderno, (error,data) => {
             res.json({
                 
-                fulfillmentMessages:[{"text":{"text":[data]}}]
+               
+
+                fulfillmentMessages: [{ "card": {"title": "card title", "subtitle": "card text", "imageUri": "https://example.com/images/example.png",                    "buttons": [
+                          { "text": "button text",  "postback": "https://example.com/path/for/end-user/to/follow" }]  }} ]
                       
                    })
            })
