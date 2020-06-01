@@ -151,14 +151,26 @@ async function gsrun(cl){
 
     else if (req.body.queryResult.parameters.orderno){
         order(orderno, (error,data) => {
-            res.json({
-                
-               
+            res.json(
 
-                fulfillmentMessages: [{ "card": {"title": "card title", "subtitle": "card text", "imageUri": "https://example.com/images/example.png",                    "buttons": [
-                          { "text": "button text",  "postback": "https://example.com/path/for/end-user/to/follow" }]  }} ]
-                      
-                   })
+                {
+                    "payload": {
+                      "google": {
+                        "expectUserResponse": true,
+                        "richResponse": {
+                          "items": [
+                            {
+                              "simpleResponse": {
+                                "textToSpeech": "this is a Google Assistant response"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                  
+            )
            })
          }
 
