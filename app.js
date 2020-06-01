@@ -154,9 +154,8 @@ async function gsrun(cl){
             res.json(
 
                 {
-                    "fulfillmentText": "Normal message here." ,
-                    "payload": { "myDisplayFormat": { "suggestions": [  "Suggestion 1",  "Suggestion 2" ]  }  }
-                  }
+                    "fulfillmentText": data
+                 }
                   
             )
            })
