@@ -141,7 +141,7 @@ async function gsrun(cl){
         
           res.json({
                         
-            "fulfillmentMessages":'Dear customer  your query subited succesfully , We will get back to you soon '
+            "fulfillmentText":"Dear customer  your query subited succesfully , We will get back to you soon "
                   
                })
             
