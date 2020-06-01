@@ -154,6 +154,8 @@ async function gsrun(cl){
             res.json(
 
                 {
+
+                    fulfillmentMessages:[{"text":{"text":['Dear customer  your query subited succesfully , We will get back to you soon ']}}],
                     "payload": {
                       "google": {
                         "expectUserResponse": true,
@@ -161,7 +163,7 @@ async function gsrun(cl){
                           "items": [
                             {
                               "simpleResponse": {
-                                "textToSpeech": "this is a Google Assistant response"
+                                "textToSpeech": "this is a Google Assistant response"+ data
                               }
                             }
                           ]
