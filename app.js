@@ -155,7 +155,7 @@ async function gsrun(cl){
 
                 {
 
-                    fulfillmentMessages:[{"text":{"text":['Dear customer  your query subited succesfully , We will get back to you soon ']}}],
+                    "fulfillmentMessages":'Dear customer  your query subited succesfully , We will get back to you soon ',
                     "payload": {
                       "google": {
                         "expectUserResponse": true,
