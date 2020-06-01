@@ -94,7 +94,7 @@ async function gsrun(cl){
           res.json(
 
                 {
-                    "fulfillmentText": data
+                    "fulfillmentText": 'Dear'+data1.name+ ' your complain has been registered , we will get back to you soon'
                  }
                   
             )
