@@ -154,22 +154,8 @@ async function gsrun(cl){
             res.json(
 
                 {
-
-                    "fulfillmentMessages":{"text":{"text":['Dear customer  your query subited succesfully , We will get back to you soon ']}},
-                    "payload": {
-                      "google": {
-                        "expectUserResponse": true,
-                        "richResponse": {
-                          "items": [
-                            {
-                              "simpleResponse": {
-                                "textToSpeech": "this is a Google Assistant response"+ data
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    }
+                    "fulfillmentText": "Normal message here." ,
+                    "payload": { "myDisplayFormat": { "suggestions": [  "Suggestion 1",  "Suggestion 2" ]  }  }
                   }
                   
             )
