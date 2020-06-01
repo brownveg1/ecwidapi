@@ -40,7 +40,7 @@ app.post('/webhook',(req, res) =>{
      product(productid, (error,data) => {
       res.json({
           
-          fulfillmentMessages:[{"text":{"text":[data]}}]
+          "fulfillmentText":data
                 
              })
      })
@@ -52,7 +52,7 @@ app.post('/webhook',(req, res) =>{
             if (error){
                return res.json({
           
-                    fulfillmentMessages:[{"text":{"text":['Please provide your number our customer support team will get back to you soon .']}}]
+                    "fulfillmentText":'Please provide your number our customer support team will get back to you soon .'
                           
                        })
             }
@@ -91,11 +91,13 @@ async function gsrun(cl){
   }
 }
 
-  res.json({
-                
-    fulfillmentMessages:[{"text":{"text":['Dear '+data1.name +' your complain registered succesfully ']}}]
-          
-       })
+          res.json(
+
+                {
+                    "fulfillmentText": data
+                 }
+                  
+            )
     
                       
     }   )
@@ -139,14 +141,10 @@ async function gsrun(cl){
         
           res.json({
                         
-            fulfillmentMessages:[{"text":{"text":['Dear customer  your query subited succesfully , We will get back to you soon ']}}]
+            "fulfillmentMessages":'Dear customer  your query subited succesfully , We will get back to you soon '
                   
                })
             
-                              
-            
-
-
     }
 
     else if (req.body.queryResult.parameters.orderno){
