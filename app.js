@@ -68,7 +68,7 @@ app.post('/webhook',(req, res) =>{
                      }              
          else{
            cancleorder(cancleorde)
-                if(data1.paymentStatus==='PAID') {
+                if(data1.paymentStatus==='CANCELLED') {
                     res.json( { "fulfillmentText": 'Dear '+data1.name+ ' your order is already cancelled .'} )
                 }
                 else{
