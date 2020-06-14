@@ -19,7 +19,7 @@ request({url: url, json:true},(error, response) => {
 
     else    {    
         
-        callback(undefined,  response.body.items[0].name + ' Rs.'+ response.body.items[0].price )          
+        callback(undefined,  response.body.items[0].name + ' Rs.'+ response.body.items[0].price,{name:response.body.items[0].name,price:response.body.items[0].price,sku:response.body.items[0].sku})          
     
     }
 

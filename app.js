@@ -1,11 +1,10 @@
 const express = require('express')
 const product = require('./scr/product')
+const readquiry = require('./readquiry')
+const creatorder=require('./creatorder')
 const order = require('./scr/findorder')
 const cancleorder = require('./scr/cancleorder')
-const value = require('./scr/sheet')
-const {google} = require('googleapis')
-const { OAuth2Client } = require('google-auth-library')
-const keys =require('./scr/client_secret.json')
+const value = require('./sheet')
 
 const app= express()
 
@@ -14,21 +13,51 @@ const port= process.env.PORT || 3000
 app.use(express.json())
 
 app.post('/webhook',(req, res) =>{
-    const { productid,orderno,name,contactnum ,complaint,complaint2 ,compalint3,cancleorde,} =req.body.queryResult.parameters 
+    const {ordername,orderphone ,orderemail,orderaddress,weight,productid,orderno,name,contactnum ,complaint,complaint2 ,compalint3,cancleorde} =req.body.queryResult.parameters 
+    
     let now = new Date()
-   
+ 
 
     if(productid){
    
      product(productid, (error,data) => {
-      res.json({
-          
-          "fulfillmentText":data
-                
-             })
+             res.json( { "fulfillmentText": data } )
+        
      })
     }
+    
+    else if(weight){
+        n = weight.toString()
+        const session= req.body.session
+        const productid= req.body.queryResult.outputContexts[1].parameters.productid
+            product(productid, (error,data,data1) => {
+           const values = {values:  [ [session,data1.sku,data1.name,data1.price,n,now], ],}
+           const key = '1rRS3jugb-txthDdZ0x0nGSzyLna64mBmKnUVkditeTM'
+               value(key,values)
+                   res.json( { "fulfillmentText": n + 'added to your cart' } )
+            })
+       }
 
+     else if(ordername){
+           const session= req.body.session
+           
+
+            readquiry(session,(items,total)=>{
+                            
+                         var name ={"name":ordername,"companyName":"Adddress: ","street":orderaddress,"city":"","countryCode":"IN","postalCode":"110055","stateOrProvinceCode":"DL","phone":orderphone}
+                         creatorder(total,orderemail,now,items,name,(error,data)=>{
+                          console.log(error)
+                                                  
+        //     const values = {values:  [ [session,ordername,orderphone,orderemail,orderaddress,now], ],}
+        //    const key = '1rRS3jugb-txthDdZ0x0nGSzyLna64mBmKnUVkditeTM'
+        //        value(key,values)
+                    res.json( { "fulfillmentText": 'Dear '+ordername+ ' your order has been placed . Your order number is '+data+ 'total payable amount :'+total   } )
+            })
+        })
+        
+    }
+       
+       
     else if (complaint){
         
          order(complaint2, (error,data,data1) => {
