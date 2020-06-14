@@ -40,13 +40,12 @@ app.post('/webhook',(req, res) =>{
 
      else if(ordername){
            const session= req.body.session
-           
-
-            readquiry(session,(items,total)=>{
-                            
-                         var name ={"name":ordername,"companyName":"Adddress: ","street":orderaddress,"city":"","countryCode":"IN","postalCode":"110055","stateOrProvinceCode":"DL","phone":orderphone}
+         
+           readquiry(session,(items,total)=>{
+                           
+                        var name ={"name":ordername,"companyName":"Adddress: ","street":orderaddress,"city":"","countryCode":"IN","postalCode":"110055","stateOrProvinceCode":"DL","phone":orderphone}
                          creatorder(total,orderemail,now,items,name,(error,data)=>{
-                          console.log(error)
+                          
                                                   
         //     const values = {values:  [ [session,ordername,orderphone,orderemail,orderaddress,now], ],}
         //    const key = '1rRS3jugb-txthDdZ0x0nGSzyLna64mBmKnUVkditeTM'
