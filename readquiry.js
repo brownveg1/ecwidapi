@@ -32,8 +32,8 @@ const client = new google.auth.JWT(
     const sheetId = "0"  // Please set the sheet ID.
         
     cl.getRequestHeaders().then((authorization) => {
-      const query = `select * where A='${searchId}'`
-      const url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:csv&gid=${sheetId}&tq=${encodeURI(query)}`
+      const query = `select * where A='${searchId}'`;
+      const url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:csv&gid=${sheetId}&tq=${encodeURI(query)}`;
       let options = {
         url: url,
         method: "GET",
@@ -41,17 +41,19 @@ const client = new google.auth.JWT(
       };
       request(options, (err, res, result) => {
         if (err) {
-          console.log(err)
+          console.log(err);
           return;
         }
         csvParse(result, {}, (err, ar) => {
-           var array=[]
-           var total=[]
+           var array=[];
+           var total=[];
+           var data=[];
            ar.forEach(a => { 
-          var temp  =( {"price":parseInt(a[3]),"weight":parseInt(a[4]),"sku":a[1],"quantity":1,"name":a[2]}
+          var temp  =( {"price":parseInt(a[3]),"weight":1,"sku":a[1],"quantity":parseInt(a[4]),"name":a[2]}
                          )
+                         var da=[a[2],a[4]+'kg','Price Rs.'+a[3]]
                        var  x=parseInt(a[7])
-                        
+                       data.push(da);
                        total.push(x);
                        
                         array.push(temp);
@@ -60,16 +62,17 @@ const client = new google.auth.JWT(
                       
                       var sum = total.reduce(function(a, b){
                         return a + b;
-                    }, 0)
+                    }, 0);
             
-                     
-         items(array,sum)
+              
+        
+         items(array,sum,data)
           }
          
-        )
+        );
       
-      })
-    })
+      });
+    });
     
     
   }

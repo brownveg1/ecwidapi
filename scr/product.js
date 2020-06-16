@@ -7,14 +7,14 @@ const product = (sku,callback) =>{
 request({url: url, json:true},(error, response) => {
         
     if(response.body.total==0){
-        callback(undefined,'Please provide valid product.')
+        callback(undefined,'Product is not available right now .')
 
     } 
     
     
     else if(response.body.items[0].enabled==false){
 
-        callback(undefined,'product is not available   right now ')
+        callback(undefined,'Product is not available right now ')
     }
 
     else    {    

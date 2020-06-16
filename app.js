@@ -14,7 +14,7 @@ app.use(express.json())
 
 app.post('/webhook',(req, res) =>{
     const {ordername,orderphone ,orderemail,orderaddress,weight,productid,orderno,name,contactnum ,complaint,complaint2 ,compalint3,cancleorde} =req.body.queryResult.parameters 
-    
+    const cartread =req.body.queryResult.intent.displayName
     let now = new Date()
  
 
@@ -34,31 +34,39 @@ app.post('/webhook',(req, res) =>{
            const values = {values:  [ [session,data1.sku,data1.name,data1.price,n,now], ],}
            const key = '1rRS3jugb-txthDdZ0x0nGSzyLna64mBmKnUVkditeTM'
                value(key,values)
-                   res.json( { "fulfillmentText": n + 'added to your cart' } )
+                   res.json( { "fulfillmentText": 'Added to your cart' } )
             })
        }
 
      else if(ordername){
            const session= req.body.session
-         
-           readquiry(session,(items,total)=>{
-                           
-                        var name ={"name":ordername,"companyName":"Adddress: ","street":orderaddress,"city":"","countryCode":"IN","postalCode":"110055","stateOrProvinceCode":"DL","phone":orderphone}
+           readquiry(session,(items,total,data)=>{
+                            
+                         var name ={"name":ordername,"companyName":"Adddress: ","street":orderaddress,"city":"","countryCode":"IN","postalCode":"110055","stateOrProvinceCode":"DL","phone":orderphone}
                          creatorder(total,orderemail,now,items,name,(error,data)=>{
-                          
-                                                  
-        //     const values = {values:  [ [session,ordername,orderphone,orderemail,orderaddress,now], ],}
-        //    const key = '1rRS3jugb-txthDdZ0x0nGSzyLna64mBmKnUVkditeTM'
-        //        value(key,values)
+                                                                           
+            const values = {values:  [ [session,ordername,orderphone,orderemail,orderaddress,now], ],}
+           const key = '1rRS3jugb-txthDdZ0x0nGSzyLna64mBmKnUVkditeTM'
+               value(key,values)
                     res.json( { "fulfillmentText": 'Dear '+ordername+ ' your order has been placed . Your order number is '+data+ 'total payable amount :'+total   } )
             })
         })
         
     }
-       
+
+    else if(cartread){
+        const session= req.body.session
+            readquiry(session,(items,total,data)=>{
+                
+                           res.json( { "fulfillmentText": 'You have Added .'+data+' . Your total paybale amount is Rs.'+total  } )
+        
+     })
+     
+ }
+    
        
     else if (complaint){
-        
+         
          order(complaint2, (error,data,data1) => {
 
             if (error){
@@ -99,17 +107,22 @@ app.post('/webhook',(req, res) =>{
                 if(data1.paymentStatus==='CANCELLED') {
                     res.json( { "fulfillmentText": 'Dear '+data1.name+ ' your order is already cancelled .'} )
                 }
-                else{
+
+                else if (data1.paymentStatus==='PAID'){
+                    
                     const values = {values:  [ [cancleorde,data1.name,data1.phone,data1.TotalAmount,now], ],}
                     const key = '1xPLDR3uAMVd50-yqU1B14Hq8gx8PxUocQJbXu4Fnclw'
                     value(key,values)
                     res.json( { "fulfillmentText": 'Dear '+data1.name+ ' your order has been cancelled . Rs.'+ data1.TotalAmount +' will be refunded to your account , We hope to see you soon '} )
-                }           
+                }     
+                else
+                 {
+                    res.json( { "fulfillmentText": 'Dear '+data1.name+ ' your order  hs been cancelled . We hope to see you soon'} )
+                }      
                       
                 }        
                        
-            } )
-        
+            } )      
 
     }
 })
