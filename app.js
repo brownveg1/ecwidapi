@@ -13,8 +13,8 @@ const port= process.env.PORT || 3000
 app.use(express.json())
 
 app.post('/webhook',(req, res) =>{
-    const {ordername,orderphone ,orderemail,orderaddress,weight,productid,orderno,name,contactnum ,complaint,complaint2 ,compalint3,cancleorde} =req.body.queryResult.parameters 
-    const cartread =req.body.queryResult.intent.displayName
+    const {cartread,ordername,orderphone ,orderemail,orderaddress,weight,productid,orderno,name,contactnum ,complaint,complaint2 ,compalint3,cancleorde} =req.body.queryResult.parameters 
+   
     let now = new Date()
  
 
@@ -62,7 +62,7 @@ app.post('/webhook',(req, res) =>{
         
      })
      
- }
+    }
     
        
     else if (complaint){
