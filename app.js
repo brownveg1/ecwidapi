@@ -29,8 +29,10 @@ app.post('/webhook',(req, res) =>{
     else if(weight){
        var n = weight.toString()
         const session= req.body.session
-        const productid= req.body.queryResult.outputContexts[1].parameters.productid
-            product(productid, (error,data,data1) => {
+        console.log(session)
+        const p= req.body.queryResult.outputContexts[0].parameters.productid
+        console.log(p)
+            product(p,(error,data,data1) => {
            const values = {values:  [ [session,data1.sku,data1.name,data1.price,n,now], ],}
            const key = '1rRS3jugb-txthDdZ0x0nGSzyLna64mBmKnUVkditeTM'
                value(key,values)
