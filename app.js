@@ -27,7 +27,7 @@ app.post('/webhook',(req, res) =>{
     }
     
     else if(weight){
-        n = weight.toString()
+       var n = weight.toString()
         const session= req.body.session
         const productid= req.body.queryResult.outputContexts[1].parameters.productid
             product(productid, (error,data,data1) => {
